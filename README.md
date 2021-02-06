@@ -3,8 +3,9 @@
 test
 Test3<br>
 
-details><summary><strong>Something</strong></summary> 
-fbr>
+<details open>
+<summary>Dropdown list</summary>
+<br>
 
 1. bla1
 2. bla2
