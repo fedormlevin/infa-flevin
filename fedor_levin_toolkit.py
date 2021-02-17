@@ -25,13 +25,13 @@ def hist_returns(lis):
     final = pd.concat(l, axis=1)
     return final
 
-def robin_login():
+def robin_login(usrnm, psw):
     """
     Function connects to Robinhood API
     Returns confirmation message
     """
-    a = rs.login(username='levinfm6@gmail.com',
-             password='Aa129987655@1',
+    a = rs.login(username=usrnm,
+             password=psw,
              expiresIn=86400,
              by_sms=True)
     return a
