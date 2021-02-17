@@ -1,6 +1,6 @@
 ### Toolkit for portfolio construction and analysis
 <details open>
-<summary>Various functionality is available</summary>
+<summary>Various functionality:</summary>
 <br>
 
 1. Getting historic prices from yfinance and calculating returns
