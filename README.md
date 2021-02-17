@@ -1,4 +1,4 @@
-### Toolkit for portfolio analytics
+### Toolkit for portfolio construction and analysis
 <details open>
 <summary>Various functionality is available</summary>
 <br>
