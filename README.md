@@ -8,5 +8,6 @@
 3. Constructing cap-weighted index
 4. Calculating portfolio wealth
 5. Daily rebalancing of a portfolio to the constant weights
+6. Periodic rebalancing to constant weights (in dev)
 
 </details>
