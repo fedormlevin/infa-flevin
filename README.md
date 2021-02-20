@@ -9,6 +9,7 @@
 5. Daily re-balancing of a portfolio to the constant weights<br>
 &nbsp;
 TO DO:
+&nbsp;
 1. Periodic re-balancing to constant weights -  in dev
 2. Re-balancing via maximizing Effective Number of Constituents (ENC) - in dev
 3. Compute portfolio return, portfolio wealth, risk and return contributions of each asset
