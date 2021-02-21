@@ -102,18 +102,21 @@ Input: tick1 - '1st asset'
     fin.dropna(inplace=True)
     return fin
 
-def equal_reweight(final, stocks, w1):
+def equal_reweight(final, stocks, w1, period):
     """
     Input: final - Data Frame of wealth of 2 assets
            stocks - list of 2 assets
            w1 - weight of the 1st asset
-    Returns resulting wealth achived by reweighting to constant weight
+           period - e.g. 5 = every 5 days
+    Returns resulting wealth achieved by reweighting to constant weight
     """
     w2 = 1 - w1
     l=[]
     s = final.index.to_list()[0]
     wealth_w1 = final.loc[s, f'Wealth_{stocks[0]}']
     wealth_w2 = final.loc[s, f'Wealth_{stocks[1]}']
+    
+    l.append([wealth_w1, wealth_w2])
 
     weight_w1 = wealth_w1/(wealth_w1 + wealth_w2)
     extra_weight_w1 = max((weight_w1 - w1), 0)
@@ -127,21 +130,35 @@ def equal_reweight(final, stocks, w1):
     l.append([new_wealth_w1, new_wealth_w2])
     
     for ii, i in enumerate(final.index.to_list()[1:-1]):
-        weight_w1 = new_wealth_w1/(new_wealth_w1 + new_wealth_w2)
-        weight_w2 = new_wealth_w2/(new_wealth_w1 + new_wealth_w2)
-        extra_weight_w1 = max((weight_w1 - w1), 0)
-        extra_weight_w2 = max((weight_w2 - w2), 0)
-
-        new2_wealth_w1 = (new_wealth_w1 - extra_weight_w1*new_wealth_w1 + extra_weight_w2*new_wealth_w2)*(1 + final.iloc[(ii+2),0])
-        new2_wealth_w2 = (new_wealth_w2 + extra_weight_w1*new_wealth_w1 - extra_weight_w2*new_wealth_w2)*(1 + final.iloc[(ii+2),2])
+        if (ii + 2) % period != 0:
         
-        new_wealth_w1 = new2_wealth_w1
-        new_wealth_w2 = new2_wealth_w2
+            #adding wealth calculation (no rebalancing)
+            new2_wealth_w1 = new_wealth_w1*(1 + final.iloc[(ii+2),0])
+            new2_wealth_w2 = new_wealth_w2*(1 + final.iloc[(ii+2),2])
+
+            new_wealth_w1 = new2_wealth_w1
+            new_wealth_w2 = new2_wealth_w2
+            #done with wealth calculation (no rebalancing)
+        else:
+        
+        
+            weight_w1 = new_wealth_w1/(new_wealth_w1 + new_wealth_w2)
+            weight_w2 = new_wealth_w2/(new_wealth_w1 + new_wealth_w2)
+            extra_weight_w1 = max((weight_w1 - w1), 0)
+            extra_weight_w2 = max((weight_w2 - w2), 0)
+
+            new2_wealth_w1 = (new_wealth_w1 - extra_weight_w1*new_wealth_w1 + extra_weight_w2*new_wealth_w2)*(1 + final.iloc[(ii+2),0])
+            new2_wealth_w2 = (new_wealth_w2 + extra_weight_w1*new_wealth_w1 - extra_weight_w2*new_wealth_w2)*(1 + final.iloc[(ii+2),2])
+
+            new_wealth_w1 = new2_wealth_w1
+            new_wealth_w2 = new2_wealth_w2
 
         l.append([new_wealth_w1, new_wealth_w2])
         
     return pd.DataFrame(l, columns=[f'Wealth_{stocks[0]}', f'Wealth_{stocks[1]}'], 
-                        index=final.index.to_list()[1:])
+                        index=final.index.to_list()[0:])
+
+
 
 
 
