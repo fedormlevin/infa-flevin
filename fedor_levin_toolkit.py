@@ -158,6 +158,17 @@ def equal_reweight(final, stocks, w1, period):
     return pd.DataFrame(l, columns=[f'Wealth_{stocks[0]}', f'Wealth_{stocks[1]}'], 
                         index=final.index.to_list()[0:])
 
+def plot_cum_returns(stocks, period=None):
+    """
+    Input: list of stocks
+    Returns: plot of cumulated return for a given period
+    """
+    data = hist_returns(stocks)
+    data.dropna(inplace=True)
+    data = data[period:]
+    return (1 + data).cumprod().plot(figsize=(10,5))
+
+
 
 
 
