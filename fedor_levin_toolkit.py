@@ -169,6 +169,31 @@ def plot_cum_returns(stocks, period=None):
     return (1 + data).cumprod().plot(figsize=(10,5))
 
 
+def index_ret(rets, weights, name, start_value=1):
+    """
+    Input: list of returns, weights, name of the index
+    Returns: combined returned of assets given weightes - no reweighting
+    """
+    em_risky = rets
+    em_risky.dropna(inplace=True)
+    col = em_risky.columns.to_list()
+    ind = em_risky.index.to_list()
+    for i in col:
+        #starting wealth for stocks in future index
+        em_risky.loc[ind[0], f'Wealth_{i}'] = start_value*weights[col.index(i)]*(1+em_risky.loc[ind[0], i])
+    for i in col:
+        for n, y in enumerate(ind[:-1]):
+            em_risky.loc[ind[n+1], f'Wealth_{i}'] = em_risky.loc[ind[n], f'Wealth_{i}']*(1+em_risky.loc[ind[n+1], i])
+    em_risky = em_risky.drop(columns=col)    
+    em_risky[name] = em_risky.sum(axis=1)
+    em_risky[name] = em_risky[name].pct_change()
+    
+    
+    return em_risky[name]
+
+
+
+
 
 
 
