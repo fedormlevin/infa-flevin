@@ -1,5 +1,5 @@
 from fredapi import Fred
-fred = Fred(api_key='YOUR API KEY')
+fred = Fred(api_key='YOUR API')
 
 def treasury_ten_year():
     """
@@ -58,12 +58,20 @@ def gdp_us():
     gdp.dropna(inplace=True)
     return gdp
 
-def breakeven_inflation_us():
+def inflation_breakeven_10yrs():
     """
     Returns: 10-Year Breakeven Inflation Rate
-    Note: current inflation = same date, previous year
+    Note: forward looking rate (10 years)
     """
     infl = fred.get_series('T10YIE')
+    return infl
+
+def inflation_breakeven_5yrs():
+    """
+    Returns: 5-Year Breakeven Inflation Rate
+    Note: forward looking rate (5 years)
+    """
+    infl = fred.get_series('T5YIE')
     return infl
 
 def consumption():
@@ -73,6 +81,35 @@ def consumption():
     consmp = fred.get_series('PCEC96')
     consmp.dropna(inplace=True)
     return consmp
+
+def consumer_price_index():
+    """
+    Returns: Consumer Price Index for All Urban Consumers: All Items in U.S. City Average
+    """
+    cpi = fred.get_series('CPIAUCSL')
+    cpi.dropna(inplace=True)
+    return cpi
+
+def recession_nber():
+    """
+    Returns: NBER based Recession Indicators for the United States from the Period following the Peak through the Trough
+    """
+    nber = fred.get_series('USREC')
+    nber.dropna(inplace=True)
+    return nber
+
+def plot_spread_recession():
+    """
+    Returns: plot of Term Spread (10-year minus 3-month) and NBER recessions from 1981
+    """
+    ten = treasury_ten_year()
+    ten = ten['1981-09-01':]
+    thr = treasury_three_month()
+    thr = thr['1981-09-01':]
+    spr = ten - thr
+    rec = recession_nber()
+    ax = spr.plot(figsize=(12,6))
+    (rec['1981':]*5).plot(ax=ax, style="--", linewidth=3)
 
 
 
