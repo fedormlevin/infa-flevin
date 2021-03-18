@@ -57,6 +57,32 @@ def sector_mktcap(lis):
     final = pd.concat(l, axis=1)
     return final.astype(float)
 
+def robin_crypto_get_oneasset_hist_returns(tick):
+    """
+    Input: 'crypto ticker'
+    Returns Data Frame of daily returns history (5 years) for provided ticker using robin_stocks module
+    """
+    df = pd.DataFrame(rs.crypto.get_crypto_historicals(tick, interval="day", span="5year"))
+    df = df[['begins_at', 'close_price']]
+    df.rename(columns={"close_price": tick, 'begins_at': 'Date'}, inplace=True)
+    df[tick] = pd.to_numeric(df[tick])
+    df[tick] = df[tick].pct_change()
+    df.dropna(inplace=True)
+    df['Date'] = pd.to_datetime(df['Date'], format='%Y/%m/%d')
+    df = df.set_index('Date')
+    return df
+
+def robin_crypto_hist_returns(lis):
+    """
+    Input: list of crypto tickers
+    Returns Data Frame of daily returns history (5 years) for provided list of crypto tickers using robin_stocks module
+    """
+    l=[]
+    for i in lis:
+        l.append(robin_crypto_get_oneasset_hist_returns(i))
+    final = pd.concat(l, axis=1)
+    return final
+
 def cap_weighted(mktcap):
     """
     Input: Data Frame of Market Caps (Sector as index, Ticker as column)
