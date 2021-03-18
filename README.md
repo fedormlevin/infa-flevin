@@ -2,7 +2,7 @@
 <details open>
 <summary>Various functionality:</summary>
 <br>
-1.One
-2.Two
+1. One<br>
+2. Two
 
 </details>
