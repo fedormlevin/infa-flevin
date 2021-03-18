@@ -2,9 +2,7 @@
 <details open>
 <summary>Various functionality:</summary>
 <br>
-1. One
-2. Two <br>
-1. sf
-2. fs
+1.One
+2.Two
 
 </details>
