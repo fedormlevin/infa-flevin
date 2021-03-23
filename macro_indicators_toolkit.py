@@ -1,5 +1,5 @@
 from fredapi import Fred
-fred = Fred(api_key='9bb5bcafdc457fccd015003c27c46e93')
+fred = Fred(api_key='YOUR API')
 
 def treasury_ten_year():
     """
