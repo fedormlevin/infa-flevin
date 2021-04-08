@@ -7,5 +7,6 @@
 - Sectors market capitalization using yfinance<br>
 - Reweighing of a portfolio with a given frequency
 - Index return as a combination of given assets
+- Macro Data from FRED
 
 </details>
