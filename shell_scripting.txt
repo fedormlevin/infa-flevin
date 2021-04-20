@@ -1,0 +1,14 @@
+# Read from the file words.txt and output the word frequency list to stdout.
+cat words.txt | tr -s ' ' '\n' | sort | uniq -c | sort -r | awk '{print($2,$1)}'
+
+# print all valid phone numbers
+One-liner solution
+
+grep '^\([0-9]\{3\}-\|([0-9]\{3\}) \)[0-9]\{3\}-[0-9]\{4\}$' file.txt
+^ symbol for must begin with, xxx- OR '(xxx) ' quoted for space.
+
+^\([0-9]\{3\}-\|([0-9]\{3\}) \)
+$ symbol for must end with xxx-xxxx
+
+[0-9]\{3\}-[0-9]\{4\}$
+where x's are digits
