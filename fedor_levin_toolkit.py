@@ -72,7 +72,15 @@ def robin_crypto_get_oneasset_hist_returns(tick):
     df = df.set_index('Date')
     return df
 
-def robin_crypto_hist_returns(lis):
+def reindex(df):
+    df = df.reset_index()
+    df['Date'] = pd.to_datetime(df['Date']).dt.date
+    df['Date'] = pd.to_datetime(df['Date'])
+    df = df.set_index('Date')
+    return df
+
+
+def crypto_hist_returns_robin(lis):
     """
     Input: list of crypto tickers
     Returns Data Frame of daily returns history (5 years) for provided list of crypto tickers using robin_stocks module
@@ -81,7 +89,10 @@ def robin_crypto_hist_returns(lis):
     for i in lis:
         l.append(robin_crypto_get_oneasset_hist_returns(i))
     final = pd.concat(l, axis=1)
-    return final
+    return reindex(final)
+
+
+
 
 def cap_weighted(mktcap):
     """
