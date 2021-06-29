@@ -6,7 +6,7 @@
 - Historical Returns of crypto currencies using robin_stocks<br>
 - Sectors market capitalization using yfinance<br>
 - Index return as a combination of given assets<br>
-- Macro Data from FRED
+- Macro Data from FRED.
 
 
 </details>
